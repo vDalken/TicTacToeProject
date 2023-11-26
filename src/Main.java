@@ -1,8 +1,10 @@
+import gamepackage.GameManager;
 import inputpackage.InputHandler;
 import outputpackage.SystemOut;
 
 public class Main {
     public static void main(String[] args) {
+        GameManager game = new GameManager();
         final String EXIT_GAME = "0";
         final String PLAYER_VERSUS_PLAYER = "1";
         final String LEADERBOARD = "2";
@@ -15,7 +17,7 @@ public class Main {
                     SystemOut.printExitOfTheGame();
                     break;
                 case PLAYER_VERSUS_PLAYER:
-
+                    game.startGame();
                     break;
                 case LEADERBOARD:
                     break;

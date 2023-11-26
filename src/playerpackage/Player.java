@@ -4,11 +4,11 @@ public class Player {
     private String userName;
     private String gameName;
     private String password;
-    private int numberOfGames;
+    private int numberOfGames=0;
 
-    private int numberOfVictories;
+    private int numberOfVictories=0;
 
-    private int numberOfDefeats;
+    private int numberOfDefeats=0;
 
     public Player(String userName) {
         this.userName = userName;
@@ -24,6 +24,10 @@ public class Player {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public int getNumberOfGames() {
         return numberOfGames;
     }
@@ -32,8 +36,16 @@ public class Player {
         return gameName;
     }
 
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setNumberOfGames(int numberOfGames) {
