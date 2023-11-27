@@ -15,11 +15,12 @@ public class SystemOut {
         System.out.println("Selected option non existent, please type in one of the shown options");
     }
 
-    public static void printStartOfTheGameMenu() {
+    public static void printStartOfTheGameMenu(String numberOfPlayer) {
+        System.out.println("\nNow it's player "+ numberOfPlayer+ " turn");
         System.out.println("0. Go back to main menu");
         System.out.println("1. Play as a guest");
         System.out.println("2. Create account");
-        System.out.println("3. Log in");
+        System.out.println("3. Log in\n");
     }
 
     public static void printGoBackToMainMenuOption() {

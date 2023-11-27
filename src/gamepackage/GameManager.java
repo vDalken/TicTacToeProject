@@ -12,16 +12,16 @@ public class GameManager {
     Player player2;
 
     public void startGame() {
-        showUserOptionsAndPlay(player1);
-
+        showUserOptionsAndPlay("1");
+        showUserOptionsAndPlay("2");
     }
 
-    private void showUserOptionsAndPlay(Player player) {
+    private void showUserOptionsAndPlay(String numberOfPlayer) {
         final String GO_BACK_TO_MAIN_MENU = "0";
         final String PLAY_AS_GUEST = "1";
         final String CREATE_ACCOUNT = "2";
         final String LOG_IN = "3";
-        SystemOut.printStartOfTheGameMenu();
+        SystemOut.printStartOfTheGameMenu(numberOfPlayer);
         String selectedOption = InputHandler.getString();
         switch (selectedOption) {
             case GO_BACK_TO_MAIN_MENU:
@@ -31,10 +31,10 @@ public class GameManager {
                 playAsGuest();
                 break;
             case CREATE_ACCOUNT:
-                createAccount(player);
+                createAccount(numberOfPlayer);
                 break;
             case LOG_IN:
-                logIn(player);
+                logIn(numberOfPlayer);
                 break;
             default:
                 SystemOut.printSelectedOptionError();
@@ -46,20 +46,23 @@ public class GameManager {
         Player guest = new Player("guest");
     }
 
-    private void createAccount(Player player) {
+    private void createAccount(String numberOfPlayer) {
         SystemOut.printUsernameOption();
         String username = InputHandler.getString();
         SystemOut.printGameNameOption();
         String gameName = InputHandler.getString();
         SystemOut.printPasswordOption();
         String password = InputHandler.getString();
-        players.add(new Player(username, gameName, password));
-        player.setUserName(username);
-        player.setGameName(gameName);
-        player.setPassword(password);
+        Player newPlayer = new Player(username, gameName, password);
+        players.add(newPlayer);
+        if (numberOfPlayer.equals("1")) {
+            player1 = newPlayer;
+        } else {
+            player2 = newPlayer;
+        }
     }
 
-    private void logIn(Player player) {
+    private void logIn(String numberOfPlayer) {
         String username = "";
         String password;
         boolean isAccountValid;
@@ -73,11 +76,25 @@ public class GameManager {
             }
             SystemOut.printPasswordOption();
             password = InputHandler.getString();
-            isAccountValid= isAccountValid(username,password);
+            isAccountValid = isAccountValid(username, password);
             if (!isAccountValid) {
                 SystemOut.printWrongPassword();
             }
         } while (!isAccountValid);
+        if (numberOfPlayer.equals("1")) {
+            player1 = findPlayer(username, password);
+        } else {
+            player2 = findPlayer(username, password);
+        }
+    }
+
+    private Player findPlayer(String username, String password) {
+        for (Player player : players) {
+            if (player.getUserName().equals(username)) {
+                return player;
+            }
+        }
+        return null;
     }
 
     private boolean isAccountValid(String username, String password) {
