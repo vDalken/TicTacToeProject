@@ -1,5 +1,6 @@
 package gamepackage;
 
+import boardpackage.GameBoard;
 import inputpackage.InputHandler;
 import outputpackage.SystemOut;
 import playerpackage.Player;
@@ -12,11 +13,19 @@ public class GameManager {
     Player player2;
 
     boolean isLoggedIn = false;
-
+    boolean doesWantToPlay=true;
     public void startGame() {
         players.add(new Player("f", "f", "f"));
         showUserOptionsAndPlay("1");
-        showUserOptionsAndPlay("2");
+        if(doesWantToPlay){
+            showUserOptionsAndPlay("2");
+        }
+        if(doesWantToPlay){
+            GameBoard gameBoard = new GameBoard();
+            gameBoard.fillBoard();
+            gameBoard.showBoard();
+        }
+
     }
 
     private void showUserOptionsAndPlay(String numberOfPlayer) {
@@ -25,13 +34,14 @@ public class GameManager {
         final String CREATE_ACCOUNT = "2";
         final String LOG_IN = "3";
         isLoggedIn = false;
-
-        while (!isLoggedIn) {
+        doesWantToPlay=true;
+        while (!isLoggedIn && doesWantToPlay) {
             SystemOut.printStartOfTheGameMenu(numberOfPlayer);
             String selectedOption = InputHandler.getString();
             switch (selectedOption) {
                 case GO_BACK_TO_MAIN_MENU:
                     SystemOut.printGoBackToMainMenuOption();
+                    doesWantToPlay=false;
                     break;
                 case PLAY_AS_GUEST:
                     playAsGuest();
@@ -68,7 +78,7 @@ public class GameManager {
         } else {
             player2 = newPlayer;
         }
-        isLoggedIn=true;
+        isLoggedIn = true;
     }
 
     private void logIn(String numberOfPlayer) {
@@ -87,8 +97,8 @@ public class GameManager {
             }
         } while (!isAccountValid);
 
-        Player loggedInPlayer = findPlayer(username, password);
-        isTheSameReference = player1 == loggedInPlayer || player2 == loggedInPlayer;
+        Player loggedInPlayer = findPlayer(username);
+        isTheSameReference = player1 == loggedInPlayer;
 
         if (isTheSameReference) {
             SystemOut.printUnsuccessfulLogIn();
@@ -107,7 +117,7 @@ public class GameManager {
 
     }
 
-    private Player findPlayer(String username, String password) {
+    private Player findPlayer(String username) {
         for (Player player : players) {
             if (player.getUserName().equals(username)) {
                 return player;
