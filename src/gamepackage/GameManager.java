@@ -54,30 +54,8 @@ public class GameManager {
     }
 
     private void createAccount(String numberOfPlayer) {
-        String username = "";
-        String gameName = "";
-        boolean doesUsernameExist;
-
-        do {
-            if (!doesUsernameAlreadyExist(username)) {
-                SystemOut.printUsernameOption();
-            } else {
-                SystemOut.printUsernameAlreadyExists();
-            }
-
-            username = InputHandler.getString();
-            doesUsernameExist = doesUsernameAlreadyExist(username);
-        } while (doesUsernameExist);
-
-        do {
-            if (!doesGameNameAlreadyExists(gameName)) {
-                SystemOut.printGameNameOption();
-            } else {
-                SystemOut.printGameNameAlreadyExists();
-            }
-
-            gameName = InputHandler.getString();
-        } while (doesGameNameAlreadyExists(gameName));
+        String username = InputHandler.getNewUsername(players);
+        String gameName = InputHandler.getGameName(players);
 
         SystemOut.printPasswordOption();
         String password = InputHandler.getString();
@@ -90,24 +68,7 @@ public class GameManager {
         } else {
             player2 = newPlayer;
         }
-    }
-
-    private boolean doesUsernameAlreadyExist(String username) {
-        for (Player player : players) {
-            if (player.getUserName().equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean doesGameNameAlreadyExists(String gameName) {
-        for (Player player : players) {
-            if (player.getGameName().equals(gameName)) {
-                return true;
-            }
-        }
-        return false;
+        isLoggedIn=true;
     }
 
     private void logIn(String numberOfPlayer) {
@@ -117,14 +78,7 @@ public class GameManager {
         boolean isTheSameReference = false;
 
         do {
-            username = "";
-            while (!isUsernameValid(username)) {
-                SystemOut.printUsernameOption();
-                username = InputHandler.getString();
-                if (!isUsernameValid(username)) {
-                    SystemOut.printUsernameNotFound();
-                }
-            }
+            username = InputHandler.getUserName(players);
             SystemOut.printPasswordOption();
             password = InputHandler.getString();
             isAccountValid = isAccountValid(username, password);
@@ -165,15 +119,6 @@ public class GameManager {
     private boolean isAccountValid(String username, String password) {
         for (Player player : players) {
             if (player.getUserName().equals(username) && player.getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isUsernameValid(String username) {
-        for (Player player : players) {
-            if (player.getUserName().equals(username)) {
                 return true;
             }
         }

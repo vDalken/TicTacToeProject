@@ -16,7 +16,7 @@ public class SystemOut {
     }
 
     public static void printStartOfTheGameMenu(String numberOfPlayer) {
-        System.out.println("\nNow it's player "+ numberOfPlayer+ " turn\n");
+        System.out.println("\nIt's player "+ numberOfPlayer+ " turn\n");
         System.out.println("0. Go back to main menu");
         System.out.println("1. Play as a guest");
         System.out.println("2. Create account");
@@ -44,7 +44,7 @@ public class SystemOut {
     }
 
     public static void printWrongPassword() {
-        System.out.println("Wrong password");
+        System.out.println("Wrong password, maybe try with another account");
     }
 
     public static void printUsernameAlreadyExists(){
