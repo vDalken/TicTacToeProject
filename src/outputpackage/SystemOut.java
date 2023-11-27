@@ -16,7 +16,7 @@ public class SystemOut {
     }
 
     public static void printStartOfTheGameMenu(String numberOfPlayer) {
-        System.out.println("\nNow it's player "+ numberOfPlayer+ " turn");
+        System.out.println("\nNow it's player "+ numberOfPlayer+ " turn\n");
         System.out.println("0. Go back to main menu");
         System.out.println("1. Play as a guest");
         System.out.println("2. Create account");
@@ -45,5 +45,21 @@ public class SystemOut {
 
     public static void printWrongPassword() {
         System.out.println("Wrong password");
+    }
+
+    public static void printUsernameAlreadyExists(){
+        System.out.println("Username already exists, please write another one");
+    }
+
+    public static void printGameNameAlreadyExists(){
+        System.out.println("Game name already exists, please type in another one");
+    }
+
+    public static void printSuccessfulLogIn(){
+        System.out.println("\nLog in successful");
+    }
+
+    public static void printUnsuccessfulLogIn(){
+        System.out.println("\nLog in unsuccessful, player1 already logged in with that account\n");
     }
 }

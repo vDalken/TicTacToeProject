@@ -11,7 +11,10 @@ public class GameManager {
     Player player1;
     Player player2;
 
+    boolean isLoggedIn = false;
+
     public void startGame() {
+        players.add(new Player("f", "f", "f"));
         showUserOptionsAndPlay("1");
         showUserOptionsAndPlay("2");
     }
@@ -21,24 +24,28 @@ public class GameManager {
         final String PLAY_AS_GUEST = "1";
         final String CREATE_ACCOUNT = "2";
         final String LOG_IN = "3";
-        SystemOut.printStartOfTheGameMenu(numberOfPlayer);
-        String selectedOption = InputHandler.getString();
-        switch (selectedOption) {
-            case GO_BACK_TO_MAIN_MENU:
-                SystemOut.printGoBackToMainMenuOption();
-                break;
-            case PLAY_AS_GUEST:
-                playAsGuest();
-                break;
-            case CREATE_ACCOUNT:
-                createAccount(numberOfPlayer);
-                break;
-            case LOG_IN:
-                logIn(numberOfPlayer);
-                break;
-            default:
-                SystemOut.printSelectedOptionError();
-                break;
+        isLoggedIn = false;
+
+        while (!isLoggedIn) {
+            SystemOut.printStartOfTheGameMenu(numberOfPlayer);
+            String selectedOption = InputHandler.getString();
+            switch (selectedOption) {
+                case GO_BACK_TO_MAIN_MENU:
+                    SystemOut.printGoBackToMainMenuOption();
+                    break;
+                case PLAY_AS_GUEST:
+                    playAsGuest();
+                    break;
+                case CREATE_ACCOUNT:
+                    createAccount(numberOfPlayer);
+                    break;
+                case LOG_IN:
+                    logIn(numberOfPlayer);
+                    break;
+                default:
+                    SystemOut.printSelectedOptionError();
+                    break;
+            }
         }
     }
 
@@ -47,14 +54,37 @@ public class GameManager {
     }
 
     private void createAccount(String numberOfPlayer) {
-        SystemOut.printUsernameOption();
-        String username = InputHandler.getString();
-        SystemOut.printGameNameOption();
-        String gameName = InputHandler.getString();
+        String username = "";
+        String gameName = "";
+        boolean doesUsernameExist;
+
+        do {
+            if (!doesUsernameAlreadyExist(username)) {
+                SystemOut.printUsernameOption();
+            } else {
+                SystemOut.printUsernameAlreadyExists();
+            }
+
+            username = InputHandler.getString();
+            doesUsernameExist = doesUsernameAlreadyExist(username);
+        } while (doesUsernameExist);
+
+        do {
+            if (!doesGameNameAlreadyExists(gameName)) {
+                SystemOut.printGameNameOption();
+            } else {
+                SystemOut.printGameNameAlreadyExists();
+            }
+
+            gameName = InputHandler.getString();
+        } while (doesGameNameAlreadyExists(gameName));
+
         SystemOut.printPasswordOption();
         String password = InputHandler.getString();
-        Player newPlayer = new Player(username, gameName, password);
+
+        Player newPlayer = new Player(username.trim(), gameName.trim(), password.trim());
         players.add(newPlayer);
+
         if (numberOfPlayer.equals("1")) {
             player1 = newPlayer;
         } else {
@@ -62,11 +92,32 @@ public class GameManager {
         }
     }
 
+    private boolean doesUsernameAlreadyExist(String username) {
+        for (Player player : players) {
+            if (player.getUserName().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean doesGameNameAlreadyExists(String gameName) {
+        for (Player player : players) {
+            if (player.getGameName().equals(gameName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void logIn(String numberOfPlayer) {
-        String username = "";
+        String username;
         String password;
         boolean isAccountValid;
+        boolean isTheSameReference = false;
+
         do {
+            username = "";
             while (!isUsernameValid(username)) {
                 SystemOut.printUsernameOption();
                 username = InputHandler.getString();
@@ -81,11 +132,25 @@ public class GameManager {
                 SystemOut.printWrongPassword();
             }
         } while (!isAccountValid);
-        if (numberOfPlayer.equals("1")) {
-            player1 = findPlayer(username, password);
+
+        Player loggedInPlayer = findPlayer(username, password);
+        isTheSameReference = player1 == loggedInPlayer || player2 == loggedInPlayer;
+
+        if (isTheSameReference) {
+            SystemOut.printUnsuccessfulLogIn();
+            isLoggedIn = false;
         } else {
-            player2 = findPlayer(username, password);
+            SystemOut.printSuccessfulLogIn();
+            isLoggedIn = true;
         }
+
+        if (numberOfPlayer.equals("1") && !isTheSameReference) {
+            player1 = loggedInPlayer;
+        }
+        if (numberOfPlayer.equals("2") && !isTheSameReference) {
+            player2 = loggedInPlayer;
+        }
+
     }
 
     private Player findPlayer(String username, String password) {
