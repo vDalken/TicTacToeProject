@@ -82,4 +82,12 @@ public class SystemOut {
     public static void printPlayerWinningRoundAnnouncement(Player player, int round){
         System.out.println("The player "+ player.getGameName() + " won round "+round +"\n");
     }
+
+    public static void printTieAnnouncement(){
+        System.out.println("There was a tie, we will need to retry");
+    }
+
+    public static void printPlayerWinningGameAnnouncement(Player player){
+        System.out.println("Player "+ player.getGameName() + " won the game\n");
+    }
 }

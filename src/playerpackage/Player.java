@@ -56,8 +56,8 @@ public class Player {
         return numberOfVictories;
     }
 
-    public void setNumberOfVictories(int numberOfVictories) {
-        this.numberOfVictories = numberOfVictories;
+    public void addVictory(){
+        this.numberOfVictories++;
     }
 
     public int getNumberOfDefeats() {

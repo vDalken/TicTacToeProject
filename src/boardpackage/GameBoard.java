@@ -52,7 +52,16 @@ public class GameBoard {
         return true;
     }
 
-    public boolean isRoundOver() {
+    public boolean isRoundOverBecauseEveryPlaceGotFilled() {
+        for (StringBuilder[] place : board) {
+            if (place.length != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isRoundOverBecauseSomeoneWon() {
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
                 if (compareLine(row)) {
@@ -99,7 +108,7 @@ public class GameBoard {
 
     private boolean compareRightDiagonal() {
         int row = 0;
-        for (int column = 1; column>=0; column--) {
+        for (int column = 1; column >= 0; column--) {
             row++;
             if (!(board[0][2].compareTo(board[row][column]) == 0)) {
                 return false;
