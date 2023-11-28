@@ -80,6 +80,6 @@ public class SystemOut {
     }
 
     public static void printPlayerWinningRoundAnnouncement(Player player, int round){
-        System.out.println("The player "+ player.getGameName() + " won round "+round);
+        System.out.println("The player "+ player.getGameName() + " won round "+round +"\n");
     }
 }

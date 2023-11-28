@@ -64,7 +64,7 @@ public class GameBoard {
             }
         }
 
-        return compareLeftDiagonal();
+        return compareLeftDiagonal() || compareRightDiagonal();
     }
 
     private boolean compareLine(int row) {
@@ -90,6 +90,18 @@ public class GameBoard {
         for (int column = 1; column < COLUMNS; column++) {
             row++;
             if (!(board[0][0].compareTo(board[row][column]) == 0)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    private boolean compareRightDiagonal() {
+        int row = 0;
+        for (int column = 1; column>=0; column--) {
+            row++;
+            if (!(board[0][2].compareTo(board[row][column]) == 0)) {
                 return false;
             }
 

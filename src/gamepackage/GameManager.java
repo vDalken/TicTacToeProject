@@ -125,11 +125,13 @@ public class GameManager {
         do {
             round(gameBoard, "X", "1");
             if(gameBoard.isRoundOver()){
+                gameBoard.showBoard();
                 SystemOut.printPlayerWinningRoundAnnouncement(player1,round);
                 break;
             }
             round(gameBoard, "O", "2");
             if(gameBoard.isRoundOver()){
+                gameBoard.showBoard();
                 SystemOut.printPlayerWinningRoundAnnouncement(player2,round);
                 break;
             }
