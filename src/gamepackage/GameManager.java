@@ -121,32 +121,42 @@ public class GameManager {
 
 
     private void startRounds(GameBoard gameBoard) {
+        int round=0;
         do {
             round(gameBoard, "X", "1");
+            if(gameBoard.isRoundOver()){
+                SystemOut.printPlayerWinningRoundAnnouncement(player1,round);
+                break;
+            }
             round(gameBoard, "O", "2");
-        }while(GameLogic.isGameOver(gameBoard));
-
+            if(gameBoard.isRoundOver()){
+                SystemOut.printPlayerWinningRoundAnnouncement(player2,round);
+                break;
+            }
+        } while (!gameBoard.isRoundOver());
     }
 
     private void round(GameBoard gameBoard, String letter, String numberOfPlayer) {
         boolean needsToRepeat = false;
-        boolean isRoundOver;
         int row;
         int column;
         do {
-            SystemOut.printPlayerTurn(numberOfPlayer);
-            gameBoard.showBoard();
+            if (!needsToRepeat) {
+                SystemOut.printPlayerTurn(numberOfPlayer,letter);
+                gameBoard.showBoard();
+            }
             String placeToPlay = InputHandler.getPlaceToPlay();
             String[] placeToPlaySplit = placeToPlay.split("");
             row = Integer.parseInt(placeToPlaySplit[0]);
             column = Integer.parseInt(placeToPlaySplit[1]);
             if (gameBoard.isPlaceToPlayValid(row, column)) {
                 gameBoard.fillBoardWithLetter(row, column, letter);
+                needsToRepeat=false;
             } else {
+                SystemOut.printPlaceError();
                 needsToRepeat = true;
             }
-            isRoundOver = GameLogic.isRoundOver(gameBoard);
-        } while (needsToRepeat && !isRoundOver);
+        } while (needsToRepeat);
 
     }
 

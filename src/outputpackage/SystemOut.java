@@ -1,5 +1,7 @@
 package outputpackage;
 
+import playerpackage.Player;
+
 public class SystemOut {
     public static void printMainMenu() {
         System.out.println("0. Exit");
@@ -69,7 +71,15 @@ public class SystemOut {
 
     public static void printPlaceToPlayError(){System.out.println("That position doesn't exist, try another one");};
 
-    public static void printPlayerTurn(String numberOfPlayer){
-        System.out.println("\nIt's player "+ numberOfPlayer+ " turn");
+    public static void printPlayerTurn(String numberOfPlayer, String letter){
+        System.out.println("\nIt's player "+ numberOfPlayer+ " turn Letter: "+letter);
+    }
+
+    public static void printPlaceError(){
+        System.out.println("\nThat place was already picked, pick another one\n");
+    }
+
+    public static void printPlayerWinningRoundAnnouncement(Player player, int round){
+        System.out.println("The player "+ player.getGameName() + " won round "+round);
     }
 }
