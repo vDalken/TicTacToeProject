@@ -62,4 +62,14 @@ public class SystemOut {
     public static void printUnsuccessfulLogIn(){
         System.out.println("\nLog in unsuccessful, player1 already logged in with that account\n");
     }
+
+    public static void printPlaceToPlay(){
+        System.out.println("Choose where you want to place your symbol");
+    }
+
+    public static void printPlaceToPlayError(){System.out.println("That position doesn't exist, try another one");};
+
+    public static void printPlayerTurn(String numberOfPlayer){
+        System.out.println("\nIt's player "+ numberOfPlayer+ " turn");
+    }
 }

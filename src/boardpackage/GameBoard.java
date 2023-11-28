@@ -21,7 +21,7 @@ public class GameBoard {
     public void fillBoard() {
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
-                char rowChar = (char) ('a' + row);
+                char rowChar = (char) ('A' + row);
                 char colChar = (char) ('1' + column);
                 board[row][column].append(rowChar).append(colChar);
             }
@@ -32,9 +32,20 @@ public class GameBoard {
         for (int row = 0; row < ROWS; row++) {
             System.out.println();
             for (int column = 0; column < COLUMNS; column++) {
-                System.out.print(board[row][column]+" ");
+                System.out.print("\t"+board[row][column]);
             }
         }
         System.out.println("\n");
+    }
+
+    public void fillBoardWithLetter(int row, int column, String letter){
+        board[row][column].replace(0,board[row][column].length(),letter);
+    }
+
+    public boolean isPlaceToPlayValid(int row, int column){
+        if(board[row][column].length()==1){
+            return false;
+        }
+        return true;
     }
 }

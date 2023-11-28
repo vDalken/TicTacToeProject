@@ -13,17 +13,19 @@ public class GameManager {
     Player player2;
 
     boolean isLoggedIn = false;
-    boolean doesWantToPlay=true;
+    boolean doesWantToPlay = true;
+
     public void startGame() {
         players.add(new Player("f", "f", "f"));
         showUserOptionsAndPlay("1");
-        if(doesWantToPlay){
+        if (doesWantToPlay) {
             showUserOptionsAndPlay("2");
         }
-        if(doesWantToPlay){
+        if (doesWantToPlay) {
             GameBoard gameBoard = new GameBoard();
             gameBoard.fillBoard();
             gameBoard.showBoard();
+            startRounds(gameBoard);
         }
 
     }
@@ -34,14 +36,14 @@ public class GameManager {
         final String CREATE_ACCOUNT = "2";
         final String LOG_IN = "3";
         isLoggedIn = false;
-        doesWantToPlay=true;
+        doesWantToPlay = true;
         while (!isLoggedIn && doesWantToPlay) {
             SystemOut.printStartOfTheGameMenu(numberOfPlayer);
             String selectedOption = InputHandler.getString();
             switch (selectedOption) {
                 case GO_BACK_TO_MAIN_MENU:
                     SystemOut.printGoBackToMainMenuOption();
-                    doesWantToPlay=false;
+                    doesWantToPlay = false;
                     break;
                 case PLAY_AS_GUEST:
                     playAsGuest();
@@ -114,6 +116,37 @@ public class GameManager {
         if (numberOfPlayer.equals("2") && !isTheSameReference) {
             player2 = loggedInPlayer;
         }
+
+    }
+
+
+    private void startRounds(GameBoard gameBoard) {
+        do {
+            round(gameBoard, "X", "1");
+            round(gameBoard, "O", "2");
+        }while(GameLogic.isGameOver(gameBoard));
+
+    }
+
+    private void round(GameBoard gameBoard, String letter, String numberOfPlayer) {
+        boolean needsToRepeat = false;
+        boolean isRoundOver;
+        int row;
+        int column;
+        do {
+            SystemOut.printPlayerTurn(numberOfPlayer);
+            gameBoard.showBoard();
+            String placeToPlay = InputHandler.getPlaceToPlay();
+            String[] placeToPlaySplit = placeToPlay.split("");
+            row = Integer.parseInt(placeToPlaySplit[0]);
+            column = Integer.parseInt(placeToPlaySplit[1]);
+            if (gameBoard.isPlaceToPlayValid(row, column)) {
+                gameBoard.fillBoardWithLetter(row, column, letter);
+            } else {
+                needsToRepeat = true;
+            }
+            isRoundOver = GameLogic.isRoundOver(gameBoard);
+        } while (needsToRepeat && !isRoundOver);
 
     }
 

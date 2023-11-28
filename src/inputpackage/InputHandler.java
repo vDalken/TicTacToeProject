@@ -29,6 +29,30 @@ public class InputHandler {
         return username;
     }
 
+    public static String getPlaceToPlay() {
+        boolean repeat = true;
+        String validPlaceToPlay = "";
+        while (repeat) {
+            SystemOut.printPlaceToPlay();
+            String placeToPlay = getString();
+            if (isPlaceToPlayValid(placeToPlay.trim())) {
+                repeat = false;
+                validPlaceToPlay = substituteTheLetter(placeToPlay.trim());
+            }
+        }
+        return validPlaceToPlay;
+    }
+
+    private static String substituteTheLetter(String placeToPlay) {
+        placeToPlay = placeToPlay.replace('1', '0').replace('2', '1').replace('3', '2');
+        placeToPlay = placeToPlay.replace('a', '0').replace('b', '1').replace('c', '2');
+        return placeToPlay;
+    }
+
+    private static boolean isPlaceToPlayValid(String placeToPlay) {
+        return placeToPlay.matches("^[abcABC][123]$");
+    }
+
     private static boolean doesUsernameAlreadyExist(String username, ArrayList<Player> players) {
         for (Player player : players) {
             if (player.getUserName().equals(username)) {
