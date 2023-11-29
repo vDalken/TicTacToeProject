@@ -26,8 +26,8 @@ public class GameManager {
         }
 
         if (!areTheSamePlayers) {
-            player1=null;
-            player2=null;
+            player1 = null;
+            player2 = null;
             showUserOptionsAndPlay("1");
             if (doesWantToPlay) {
                 showUserOptionsAndPlay("2");
@@ -160,14 +160,35 @@ public class GameManager {
 
     private void rounds(GameBoard gameBoard, int round) {
         boolean isRoundOverBecauseEveryPlaceGotFilled = false;
+        Player player1Copy;
+        Player player2Copy;
+        String letterOfPlayer1;
+        String letterOfPlayer2;
+        int numberOfVictoriesOfPlayer1Copy;
+        int numberOfVictoriesOfPlayer2Copy;
         do {
-            round(gameBoard, "X", player1, round + "");
+            if (round % 2 == 1) {
+                player1Copy = player1;
+                player2Copy = player2;
+                letterOfPlayer1 = "X";
+                letterOfPlayer2 = "O";
+                numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer1;
+                numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer2;
+            } else {
+                player1Copy = player2;
+                player2Copy = player1;
+                letterOfPlayer1 = "O";
+                letterOfPlayer2 = "X";
+                numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer2;
+                numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer1;
+            }
+            round(gameBoard, letterOfPlayer1, player1Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                numberOfVictoriesOfPlayer1++;
-                if (numberOfVictoriesOfPlayer1 != 2) {
-                    SystemOut.printPlayerWinningRoundAnnouncement(player1, round);
-                    player1.addRoundVictory();
+                numberOfVictoriesOfPlayer1Copy++;
+                if (numberOfVictoriesOfPlayer1Copy != 2) {
+                    SystemOut.printPlayerWinningRoundAnnouncement(player1Copy, round);
+                    player1Copy.addRoundVictory();
                 }
                 break;
             }
@@ -175,18 +196,20 @@ public class GameManager {
                 isRoundOverBecauseEveryPlaceGotFilled = gameBoard.isRoundOverBecauseEveryPlaceGotFilled();
                 break;
             }
-            round(gameBoard, "O", player2, round + "");
+            round(gameBoard, letterOfPlayer2, player2Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                numberOfVictoriesOfPlayer2++;
-                if (numberOfVictoriesOfPlayer2 != 2) {
-                    SystemOut.printPlayerWinningRoundAnnouncement(player2, round);
-                    player2.addRoundVictory();
+                numberOfVictoriesOfPlayer2Copy++;
+                if (numberOfVictoriesOfPlayer2Copy != 2) {
+                    SystemOut.printPlayerWinningRoundAnnouncement(player2Copy, round);
+                    player2Copy.addRoundVictory();
                 }
                 break;
             }
             isRoundOverBecauseEveryPlaceGotFilled = gameBoard.isRoundOverBecauseEveryPlaceGotFilled();
         } while (!gameBoard.isRoundOverBecauseSomeoneWon() && !isRoundOverBecauseEveryPlaceGotFilled);
+        numberOfVictoriesOfPlayer1 = numberOfVictoriesOfPlayer1Copy;
+        numberOfVictoriesOfPlayer2 = numberOfVictoriesOfPlayer2Copy;
         if (isRoundOverBecauseEveryPlaceGotFilled) {
             SystemOut.printTieAnnouncement();
         }
