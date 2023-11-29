@@ -18,7 +18,7 @@ public class SystemOut {
     }
 
     public static void printStartOfTheGameMenu(String numberOfPlayer) {
-        System.out.println("\nIt's player "+ numberOfPlayer+ " turn\n");
+        System.out.println("\nIt's player number "+ numberOfPlayer+ " time to choose\n");
         System.out.println("0. Go back to main menu");
         System.out.println("1. Play as a guest");
         System.out.println("2. Create account");
@@ -71,8 +71,9 @@ public class SystemOut {
 
     public static void printPlaceToPlayError(){System.out.println("That position doesn't exist, try another one");};
 
-    public static void printPlayerTurn(String numberOfPlayer, String letter){
-        System.out.println("\nIt's player "+ numberOfPlayer+ " turn Letter: "+letter);
+    public static void printPlayerTurn(String name, String letter, String round){
+        name = name==null ? "guest" : name;
+        System.out.println("\n"+name+ ", it's your turn\nLetter: "+letter+"\nRound: "+round);
     }
 
     public static void printPlaceError(){
@@ -84,10 +85,10 @@ public class SystemOut {
     }
 
     public static void printTieAnnouncement(){
-        System.out.println("There was a tie, we will need to retry");
+        System.out.println("\nThere was a tie, we will need to retry");
     }
 
     public static void printPlayerWinningGameAnnouncement(Player player){
-        System.out.println("Player "+ player.getGameName() + " won the game\n");
+        System.out.println(player.getGameName() + " won the game\n");
     }
 }

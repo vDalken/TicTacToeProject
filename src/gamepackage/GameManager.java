@@ -26,7 +26,6 @@ public class GameManager {
         if (doesWantToPlay) {
             startRounds();
         }
-
     }
 
     private void showUserOptionsAndPlay(String numberOfPlayer) {
@@ -45,7 +44,8 @@ public class GameManager {
                     doesWantToPlay = false;
                     break;
                 case PLAY_AS_GUEST:
-                    playAsGuest();
+                    playAsGuest(numberOfPlayer);
+                    isLoggedIn=true;
                     break;
                 case CREATE_ACCOUNT:
                     createAccount(numberOfPlayer);
@@ -60,8 +60,12 @@ public class GameManager {
         }
     }
 
-    private void playAsGuest() {
-        Player guest = new Player("guest");
+    private void playAsGuest(String numberOfPlayer) {
+        if(numberOfPlayer.equals("1")){
+            player1 = new Player("guest 1");
+        }else{
+            player2 = new Player("guest 2");
+        }
     }
 
     private void createAccount(String numberOfPlayer) {
@@ -120,10 +124,12 @@ public class GameManager {
 
 
     private void startRounds() {
+        int round = 1;
         do {
             GameBoard gameBoard = new GameBoard();
             gameBoard.fillBoard();
-            rounds(gameBoard);
+            rounds(gameBoard, round);
+            round++;
         } while (numberOfVictoriesOfPlayer1 + numberOfVictoriesOfPlayer2 != 3 && numberOfVictoriesOfPlayer1 != 2 && numberOfVictoriesOfPlayer2 != 2);
         if (numberOfVictoriesOfPlayer1 > numberOfVictoriesOfPlayer2) {
             SystemOut.printPlayerWinningGameAnnouncement(player1);
@@ -136,44 +142,45 @@ public class GameManager {
         numberOfVictoriesOfPlayer2 = 0;
     }
 
-    private void rounds(GameBoard gameBoard) {
-        int round = 1;
+    private void rounds(GameBoard gameBoard, int round) {
         boolean isRoundOverBecauseEveryPlaceGotFilled = false;
         do {
-            round(gameBoard, "X", "1");
+            round(gameBoard, "X", player1.getGameName(), round+"");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
                 numberOfVictoriesOfPlayer1++;
                 if (numberOfVictoriesOfPlayer1 != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player1, round);
                 }
-                round++;
                 break;
             }
-            round(gameBoard, "O", "2");
+            if (gameBoard.isRoundOverBecauseEveryPlaceGotFilled()) {
+                isRoundOverBecauseEveryPlaceGotFilled = gameBoard.isRoundOverBecauseEveryPlaceGotFilled();
+                break;
+            }
+            round(gameBoard, "O", player2.getGameName(), round+"");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
                 numberOfVictoriesOfPlayer2++;
                 if (numberOfVictoriesOfPlayer2 != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player2, round);
                 }
-                round++;
                 break;
             }
             isRoundOverBecauseEveryPlaceGotFilled = gameBoard.isRoundOverBecauseEveryPlaceGotFilled();
-        } while (!gameBoard.isRoundOverBecauseSomeoneWon() || !isRoundOverBecauseEveryPlaceGotFilled);
+        } while (!gameBoard.isRoundOverBecauseSomeoneWon() && !isRoundOverBecauseEveryPlaceGotFilled);
         if (isRoundOverBecauseEveryPlaceGotFilled) {
             SystemOut.printTieAnnouncement();
         }
     }
 
-    private void round(GameBoard gameBoard, String letter, String numberOfPlayer) {
+    private void round(GameBoard gameBoard, String letter, String name, String round) {
         boolean needsToRepeat = false;
         int row;
         int column;
         do {
             if (!needsToRepeat) {
-                SystemOut.printPlayerTurn(numberOfPlayer, letter);
+                SystemOut.printPlayerTurn(name, letter, round);
                 gameBoard.showBoard();
             }
             String placeToPlay = InputHandler.getPlaceToPlay();

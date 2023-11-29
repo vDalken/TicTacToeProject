@@ -10,8 +10,8 @@ public class Player {
 
     private int numberOfDefeats=0;
 
-    public Player(String userName) {
-        this.userName = userName;
+    public Player(String gameName) {
+        this.gameName=gameName;
     }
 
     public Player(String userName, String gameName, String password) {

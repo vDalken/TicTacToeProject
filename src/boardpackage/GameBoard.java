@@ -53,9 +53,11 @@ public class GameBoard {
     }
 
     public boolean isRoundOverBecauseEveryPlaceGotFilled() {
-        for (StringBuilder[] place : board) {
-            if (place.length != 1) {
-                return false;
+        for(int row=0;row<ROWS;row++){
+            for(int column=0;column<COLUMNS;column++){
+                if(board[row][column].length()!=1){
+                    return false;
+                }
             }
         }
         return true;
