@@ -19,12 +19,26 @@ public class GameManager {
 
     public void startGame() {
         players.add(new Player("f", "f", "f"));
-        showUserOptionsAndPlay("1");
-        if (doesWantToPlay) {
-            showUserOptionsAndPlay("2");
+        boolean areTheSamePlayers = false;
+        if (player1 != null && player2 != null) {
+            SystemOut.printQuestionAboutPlayers();
+            areTheSamePlayers = InputHandler.getAnswer();
         }
-        if (doesWantToPlay) {
-            startRounds();
+
+        if (!areTheSamePlayers) {
+            player1=null;
+            player2=null;
+            showUserOptionsAndPlay("1");
+            if (doesWantToPlay) {
+                showUserOptionsAndPlay("2");
+            }
+            if (doesWantToPlay) {
+                startRounds();
+            }
+        } else {
+            if (doesWantToPlay) {
+                startRounds();
+            }
         }
     }
 
@@ -45,7 +59,7 @@ public class GameManager {
                     break;
                 case PLAY_AS_GUEST:
                     playAsGuest(numberOfPlayer);
-                    isLoggedIn=true;
+                    isLoggedIn = true;
                     break;
                 case CREATE_ACCOUNT:
                     createAccount(numberOfPlayer);
@@ -61,9 +75,9 @@ public class GameManager {
     }
 
     private void playAsGuest(String numberOfPlayer) {
-        if(numberOfPlayer.equals("1")){
+        if (numberOfPlayer.equals("1")) {
             player1 = new Player("guest 1");
-        }else{
+        } else {
             player2 = new Player("guest 2");
         }
     }
@@ -131,6 +145,8 @@ public class GameManager {
             rounds(gameBoard, round);
             round++;
         } while (numberOfVictoriesOfPlayer1 + numberOfVictoriesOfPlayer2 != 3 && numberOfVictoriesOfPlayer1 != 2 && numberOfVictoriesOfPlayer2 != 2);
+        player1.setNumberOfRoundVictories(0);
+        player2.setNumberOfRoundVictories(0);
         if (numberOfVictoriesOfPlayer1 > numberOfVictoriesOfPlayer2) {
             SystemOut.printPlayerWinningGameAnnouncement(player1);
             player1.addVictory();
@@ -145,12 +161,13 @@ public class GameManager {
     private void rounds(GameBoard gameBoard, int round) {
         boolean isRoundOverBecauseEveryPlaceGotFilled = false;
         do {
-            round(gameBoard, "X", player1.getGameName(), round+"");
+            round(gameBoard, "X", player1, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
                 numberOfVictoriesOfPlayer1++;
                 if (numberOfVictoriesOfPlayer1 != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player1, round);
+                    player1.addRoundVictory();
                 }
                 break;
             }
@@ -158,12 +175,13 @@ public class GameManager {
                 isRoundOverBecauseEveryPlaceGotFilled = gameBoard.isRoundOverBecauseEveryPlaceGotFilled();
                 break;
             }
-            round(gameBoard, "O", player2.getGameName(), round+"");
+            round(gameBoard, "O", player2, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
                 numberOfVictoriesOfPlayer2++;
                 if (numberOfVictoriesOfPlayer2 != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player2, round);
+                    player2.addRoundVictory();
                 }
                 break;
             }
@@ -174,13 +192,13 @@ public class GameManager {
         }
     }
 
-    private void round(GameBoard gameBoard, String letter, String name, String round) {
+    private void round(GameBoard gameBoard, String letter, Player player, String round) {
         boolean needsToRepeat = false;
         int row;
         int column;
         do {
             if (!needsToRepeat) {
-                SystemOut.printPlayerTurn(name, letter, round);
+                SystemOut.printPlayerTurn(player, letter, round);
                 gameBoard.showBoard();
             }
             String placeToPlay = InputHandler.getPlaceToPlay();

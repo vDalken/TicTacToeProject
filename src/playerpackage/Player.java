@@ -8,7 +8,7 @@ public class Player {
 
     private int numberOfVictories=0;
 
-    private int numberOfDefeats=0;
+    private int numberOfRoundVictories=0;
 
     public Player(String gameName) {
         this.gameName=gameName;
@@ -60,11 +60,15 @@ public class Player {
         this.numberOfVictories++;
     }
 
-    public int getNumberOfDefeats() {
-        return numberOfDefeats;
+    public void setNumberOfRoundVictories(int numberOfRoundVictories) {
+        this.numberOfRoundVictories = numberOfRoundVictories;
     }
 
-    public void setNumberOfDefeats(int numberOfDefeats) {
-        this.numberOfDefeats = numberOfDefeats;
+    public void addRoundVictory(){
+        this.numberOfRoundVictories++;
+    }
+
+    public int getNumberOfRoundVictories() {
+        return numberOfRoundVictories;
     }
 }

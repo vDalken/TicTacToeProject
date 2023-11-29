@@ -105,4 +105,22 @@ public class InputHandler {
         }
         return false;
     }
+
+    public static boolean getAnswer() {
+        String booleanAnswer = " ";
+        do {
+            Scanner scan = new Scanner(System.in);
+            String answer = scan.nextLine();
+            if (answer.trim().equalsIgnoreCase("yes")) {
+                booleanAnswer = "true";
+            }
+            if (answer.trim().equalsIgnoreCase("no")) {
+                booleanAnswer = "false";
+            }
+            if (booleanAnswer.equals(" ")) {
+                SystemOut.printYesOrNo();
+            }
+        } while (booleanAnswer.equals(" "));
+        return booleanAnswer.equals("true");
+    }
 }
