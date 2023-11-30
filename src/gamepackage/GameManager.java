@@ -33,10 +33,14 @@ public class GameManager {
             if (doesWantToPlay) {
                 showUserOptionsAndPlay("2");
             }
+            player1.addGame();
+            player2.addGame();
             if (doesWantToPlay) {
                 startRounds();
             }
         } else {
+            player1.addGame();
+            player2.addGame();
             if (doesWantToPlay) {
                 startRounds();
             }

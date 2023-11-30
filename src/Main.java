@@ -32,7 +32,7 @@ public class Main {
                     }
                     break;
                 case HANDBOOK:
-
+                    SystemOut.printHandbook();
                     break;
                 default:
                     SystemOut.printSelectedOptionError();

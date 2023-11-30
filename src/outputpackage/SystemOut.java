@@ -124,4 +124,10 @@ public class SystemOut {
     public static void printLeaderboardNames(){
         System.out.println(ANSI_GREEN + "\tGame Name "+ "\tNumber Of Games "+ "\tNumber of Victories");
     }
+
+    public static void printHandbook(){
+        System.out.println(ANSI_MAGENTA+"\nPlayers can create an account, or login with a previous created account");
+        System.out.println("The first player to achieve 2 wins, wins the game");
+        System.out.println("Everytime a round is done, the order of the players is switched\n" + ANSI_RESET);
+    }
 }

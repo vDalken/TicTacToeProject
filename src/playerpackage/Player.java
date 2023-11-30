@@ -24,12 +24,8 @@ public class Player {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getNumberOfGames() {
-        return numberOfGames;
+    public void addGame(){
+        this.numberOfGames++;
     }
 
     public String getGameName() {
@@ -74,6 +70,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "\t"+gameName + "\t" + numberOfGames + "\t" + numberOfVictories;
+        return "\t"+gameName + "\t\t\t" + numberOfGames + "\t\t\t\t\t" + numberOfVictories;
     }
 }
