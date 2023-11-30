@@ -10,10 +10,23 @@ public class SystemOut {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_YELLOW = "\u001B[33m";
 
+    private static final String ANSI_MAGENTA = "\u001b[35m";
+
+    public static void printGameName() {
+        System.out.println(ANSI_CYAN + " ______   __     ______     ______   ______     ______     ______   ______     ______    \n" +
+                "/\\__  _\\ /\\ \\   /\\  ___\\   /\\__  _\\ /\\  __ \\   /\\  ___\\   /\\__  _\\ /\\  __ \\   /\\  ___\\   \n" +
+                "\\/_/\\ \\/ \\ \\ \\  \\ \\ \\____  \\/_/\\ \\/ \\ \\  __ \\  \\ \\ \\____  \\/_/\\ \\/ \\ \\ \\/\\ \\  \\ \\  __\\   \n" +
+                "   \\ \\_\\  \\ \\_\\  \\ \\_____\\    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\_____\\ \n" +
+                "    \\/_/   \\/_/   \\/_____/     \\/_/   \\/_/\\/_/   \\/_____/     \\/_/   \\/_____/   \\/_____/ \n" +
+                "                                                                                         " + ANSI_RESET);
+    }
+
     public static void printMainMenu() {
         System.out.println(ANSI_CYAN + "0. Exit" + ANSI_RESET);
-        System.out.println(ANSI_YELLOW +"1. Player Versus Player" + ANSI_RESET);
-        System.out.println(ANSI_GREEN +"2. Leaderboard" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "1. Player Versus Player" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "2. Leaderboard" + ANSI_RESET);
+        System.out.println(ANSI_MAGENTA + "3. Handbook" + ANSI_RESET
+        );
     }
 
     public static void printExitOfTheGame() {
@@ -106,5 +119,9 @@ public class SystemOut {
 
     public static void printYesOrNo() {
         System.out.println(ANSI_CYAN + "Write yes or no please" + ANSI_RESET);
+    }
+
+    public static void printLeaderboardNames(){
+        System.out.println(ANSI_GREEN + "\tGame Name "+ "\tNumber Of Games "+ "\tNumber of Victories");
     }
 }

@@ -71,4 +71,9 @@ public class Player {
     public int getNumberOfRoundVictories() {
         return numberOfRoundVictories;
     }
+
+    @Override
+    public String toString() {
+        return "\t"+gameName + "\t" + numberOfGames + "\t" + numberOfVictories;
+    }
 }
