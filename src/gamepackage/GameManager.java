@@ -4,6 +4,8 @@ import boardpackage.GameBoard;
 import inputpackage.InputHandler;
 import outputpackage.SystemOut;
 import playerpackage.Player;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.util.ArrayList;
 
@@ -144,7 +146,7 @@ public class GameManager {
             gameBoard.fillBoard();
             rounds(gameBoard, round);
             round++;
-        } while (numberOfVictoriesOfPlayer1 + numberOfVictoriesOfPlayer2 != 3 && numberOfVictoriesOfPlayer1 != 2 && numberOfVictoriesOfPlayer2 != 2);
+        } while (player1.getNumberOfRoundVictories() +player2.getNumberOfRoundVictories() != 3 && player1.getNumberOfRoundVictories() != 2 && player2.getNumberOfRoundVictories() != 2);
         player1.setNumberOfRoundVictories(0);
         player2.setNumberOfRoundVictories(0);
         if (numberOfVictoriesOfPlayer1 > numberOfVictoriesOfPlayer2) {
@@ -166,26 +168,28 @@ public class GameManager {
         String letterOfPlayer2;
         int numberOfVictoriesOfPlayer1Copy;
         int numberOfVictoriesOfPlayer2Copy;
+        int delay = 10000;
+        if (round % 2 == 1) {
+            player1Copy = player1;
+            player2Copy = player2;
+            letterOfPlayer1 = "X";
+            letterOfPlayer2 = "O";
+            numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer1;
+            numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer2;
+        } else {
+            player1Copy = player2;
+            player2Copy = player1;
+            letterOfPlayer1 = "O";
+            letterOfPlayer2 = "X";
+            numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer2;
+            numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer1;
+        }
         do {
-            if (round % 2 == 1) {
-                player1Copy = player1;
-                player2Copy = player2;
-                letterOfPlayer1 = "X";
-                letterOfPlayer2 = "O";
-                numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer1;
-                numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer2;
-            } else {
-                player1Copy = player2;
-                player2Copy = player1;
-                letterOfPlayer1 = "O";
-                letterOfPlayer2 = "X";
-                numberOfVictoriesOfPlayer1Copy = numberOfVictoriesOfPlayer2;
-                numberOfVictoriesOfPlayer2Copy = numberOfVictoriesOfPlayer1;
-            }
             round(gameBoard, letterOfPlayer1, player1Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                numberOfVictoriesOfPlayer1Copy++;
+                //numberOfVictoriesOfPlayer1Copy++;
+                //player1Copy.addRoundVictory();
                 if (numberOfVictoriesOfPlayer1Copy != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player1Copy, round);
                     player1Copy.addRoundVictory();
@@ -199,7 +203,8 @@ public class GameManager {
             round(gameBoard, letterOfPlayer2, player2Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                numberOfVictoriesOfPlayer2Copy++;
+                //numberOfVictoriesOfPlayer2Copy++;
+                //player2Copy.addRoundVictory();
                 if (numberOfVictoriesOfPlayer2Copy != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player2Copy, round);
                     player2Copy.addRoundVictory();

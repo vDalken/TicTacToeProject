@@ -45,7 +45,7 @@ public class InputHandler {
 
     private static String substituteTheLetter(String placeToPlay) {
         placeToPlay = placeToPlay.replace('1', '0').replace('2', '1').replace('3', '2');
-        placeToPlay = placeToPlay.replace('a', '0').replace('b', '1').replace('c', '2');
+        placeToPlay = placeToPlay.replace('a', '0').replace('b', '1').replace('c', '2').replace('A','0').replace('B','1').replace('C','2');
         return placeToPlay;
     }
 
