@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import java.util.ArrayList;
 
 public class GameManager {
+    private static final String ANSI_RESET = "\u001B[0m";
     ArrayList<Player> players = new ArrayList<>();
     Player player1;
     Player player2;
@@ -188,8 +189,6 @@ public class GameManager {
             round(gameBoard, letterOfPlayer1, player1Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                //numberOfVictoriesOfPlayer1Copy++;
-                //player1Copy.addRoundVictory();
                 if (numberOfVictoriesOfPlayer1Copy != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player1Copy, round);
                     player1Copy.addRoundVictory();
@@ -203,8 +202,6 @@ public class GameManager {
             round(gameBoard, letterOfPlayer2, player2Copy, round + "");
             if (gameBoard.isRoundOverBecauseSomeoneWon()) {
                 gameBoard.showBoard();
-                //numberOfVictoriesOfPlayer2Copy++;
-                //player2Copy.addRoundVictory();
                 if (numberOfVictoriesOfPlayer2Copy != 2) {
                     SystemOut.printPlayerWinningRoundAnnouncement(player2Copy, round);
                     player2Copy.addRoundVictory();
@@ -227,6 +224,7 @@ public class GameManager {
         do {
             if (!needsToRepeat) {
                 SystemOut.printPlayerTurn(player, letter, round);
+                System.out.print(ANSI_RESET);
                 gameBoard.showBoard();
             }
             String placeToPlay = InputHandler.getPlaceToPlay();
